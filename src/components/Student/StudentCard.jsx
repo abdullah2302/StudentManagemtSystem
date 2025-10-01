@@ -1,5 +1,5 @@
 import React from "react";
-import StudentAvatar from "./StudentAvatar";
+import StudentAvatar from "./StudentAvatar";    
 import StudentInfo from "./StudentInfo";
 import StudentActions from "./StudentActions";
 

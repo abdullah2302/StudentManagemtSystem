@@ -28,6 +28,7 @@ const Students = () => {
           />
         ))}
       </div>
+      
     </div>
   );
 };
