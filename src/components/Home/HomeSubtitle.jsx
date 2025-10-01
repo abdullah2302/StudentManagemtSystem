@@ -15,7 +15,7 @@ const HomeSubtitle = () => {
       wrapper="p"
       speed={50}
       className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto"
-      repeat={Infinity}
+      repeat={`false`}
     />
   );
 };
