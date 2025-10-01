@@ -1,22 +1,16 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Student from "./pages/Student";
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Navbar stays on top across all pages */}
-      <Navbar />
-
-      {/* Page Content */}
-      <main className="flex-grow">
-        <Home />
-      </main>
-
-      {/* Footer stays at bottom */}
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/students" element={<Student />} />
+      </Routes>
+    </Router>
   );
 }
 

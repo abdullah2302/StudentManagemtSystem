@@ -1,19 +1,29 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
-    <section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-center py-16 md:py-20 px-4">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-        Welcome to{" "}
-        <span className="text-yellow-300">Student Management System</span>
-      </h1>
-      <p className="text-base sm:text-lg md:text-xl mb-6 max-w-2xl mx-auto">
-        Manage students, courses, teachers, and reports with ease in one place.
-      </p>
-      <button className="bg-yellow-400 text-blue-900 font-semibold px-5 sm:px-6 py-2 sm:py-3 rounded-lg shadow hover:bg-yellow-300 transition text-sm sm:text-base">
-        Get Started
-      </button>
-    </section>
+    <main className="flex-grow flex items-center justify-center bg-gradient-to-br from-gray-100 via-blue-50 to-gray-200">
+      <div className="text-center p-6">
+        <h2 className="text-5xl md:text-6xl font-extrabold text-gray-800 mb-4 drop-shadow-md">
+          Welcome to <span className="text-blue-600">Student Management System</span>
+        </h2>
+        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+          Manage students, courses, and performance easily with our powerful and user-friendly system.
+        </p>
+        <div className="mt-6">
+          <button
+            onClick={() => navigate("/students")}
+            className="px-6 py-3 bg-blue-600 text-white rounded-full shadow-lg 
+                       hover:bg-blue-700 hover:scale-105 transform transition duration-300"
+          >
+            Get Started
+          </button>
+        </div>
+      </div>
+    </main>
   );
 };
 
