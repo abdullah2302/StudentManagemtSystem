@@ -18,7 +18,7 @@ const Students = () => {
           Our Students
         </h1>
 
-        {/* Responsive grid with equal-height cards */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 auto-rows-fr justify-items-center">
           {students.map((student) => (
             <StudentCard
