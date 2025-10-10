@@ -1,17 +1,41 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faIdBadge,
+  faBookOpen,
+  faBuilding,
+} from "@fortawesome/free-solid-svg-icons";
 
 const StudentInfo = ({ name, rollNumber, course, department }) => {
   return (
     <div className="text-center">
-      <h2 className="text-2xl font-extrabold text-gray-800 mb-2">{name}</h2>
-      <p className="text-gray-600 mb-1">
-        <span className="font-semibold text-blue-600">Roll No:</span> {rollNumber}
+      {/* Student Name */}
+      <h2 className="text-2xl font-extrabold text-gray-800 mb-3 tracking-wide">
+        {name}
+      </h2>
+
+      {/* Roll Number */}
+      <p className="text-gray-600 mb-2 flex items-center justify-center gap-2">
+        <FontAwesomeIcon icon={faIdBadge} className="text-blue-500" />
+        <span className="font-medium">
+          <span className="text-blue-600 font-semibold">Roll No:</span> {rollNumber}
+        </span>
       </p>
-      <p className="text-gray-600 mb-1">
-        <span className="font-semibold text-blue-600">Course:</span> {course}
+
+      {/* Course */}
+      <p className="text-gray-600 mb-2 flex items-center justify-center gap-2">
+        <FontAwesomeIcon icon={faBookOpen} className="text-green-500" />
+        <span className="font-medium">
+          <span className="text-blue-600 font-semibold">Course:</span> {course}
+        </span>
       </p>
-      <p className="text-gray-600">
-        <span className="font-semibold text-blue-600">Department:</span> {department}
+
+      {/* Department */}
+      <p className="text-gray-600 flex items-center justify-center gap-2">
+        <FontAwesomeIcon icon={faBuilding} className="text-purple-500" />
+        <span className="font-medium">
+          <span className="text-blue-600 font-semibold">Department:</span> {department}
+        </span>
       </p>
     </div>
   );

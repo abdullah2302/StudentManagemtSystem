@@ -8,10 +8,10 @@ const Navbar = () => {
   const { pathname } = useLocation();
 
   const navLinks = [
-    { name: "Students", path: "/students" },
-    { name: "Courses", path: "#" },
     { name: "Dashboard", path: "/dashboard" },
-    { name: "Contact", path: "#" },
+    { name: "Students", path: "/students" },
+    { name: "Courses", path: "/courses" },
+    { name: "Contact", path: "/contact" },
   ];
 
   const NavLinkItem = ({ name, path, mobile }) => {
@@ -40,7 +40,7 @@ const Navbar = () => {
           Student<span className="text-yellow-300">MS</span>
         </Link>
 
-        {/* Desktop Menu */}
+        {/* desktop section, laptop, or tap*/}
         <ul className="hidden md:flex space-x-6">
           {navLinks.map((link) => (
             <li key={link.name}>
@@ -49,13 +49,13 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Mobile Menu Button */}
+        {/* mobile menu button */}
         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
           <FontAwesomeIcon icon={isOpen ? faTimes : faBars} size="lg" />
         </button>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* dropdown menu for mobile */}
       {isOpen && (
         <div className="md:hidden bg-indigo-800">
           <ul className="flex flex-col space-y-4 p-4">

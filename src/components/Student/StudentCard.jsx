@@ -1,15 +1,26 @@
 import React from "react";
 import StudentAvatar from "./StudentAvatar";
-import StudentInfo from "./StudentInfo";
 import StudentActions from "./StudentActions";
+import StudentInfo from "./StudentInfo";
 
-const StudentCard = ({ name, rollNumber, course, department }) => {
+const StudentCard = ({ student, onDelete }) => {
   return (
-    <div className="max-w-sm w-full bg-gradient-to-br from-white to-blue-50 border border-gray-200 rounded-2xl shadow-lg p-6 
-                    flex flex-col items-center text-center hover:shadow-2xl hover:scale-105 transform transition duration-300">
-      <StudentAvatar name={name} />
-      <StudentInfo name={name} rollNumber={rollNumber} course={course} department={department} />
-      <StudentActions />
+    <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-xs mx-auto transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
+      {/* Avatar */}
+      <div className="flex justify-center mb-4">
+        <StudentAvatar name={student.name} />
+      </div>
+
+      {/* Student Info */}
+      <StudentInfo
+        name={student.name}
+        rollNumber={student.rollNumber}
+        course={student.course}
+        department={student.department}
+      />
+
+      {/* Actions */}
+      <StudentActions student={student} onDelete={onDelete} />
     </div>
   );
 };
