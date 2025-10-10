@@ -3,13 +3,12 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import StudentGrid from "../components/Student/StudentGrid";
 import AddStudentButton from "../components/Buttons/AddStudentButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const Students = () => {
   const [students, setStudents] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Load students from localStorage
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("students")) || [];
     setStudents(saved);
@@ -31,22 +30,18 @@ const Students = () => {
           Our Students
         </h1>
 
-        {/* 🔍 Search Bar */}
-        <div className="max-w-md mx-auto mb-8 relative">
-          <FontAwesomeIcon
-            icon={faSearch}
-            className="absolute left-3 top-3 text-gray-400"
-          />
+        {/* Search Bar */}
+        <div className="max-w-md mx-auto mb-10">
           <input
             type="text"
             placeholder="Search by name or roll number..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
           />
         </div>
 
-       
+        {/* Student Grid */}
         {filteredStudents.length > 0 ? (
           <StudentGrid students={filteredStudents} setStudents={setStudents} />
         ) : (
@@ -55,6 +50,7 @@ const Students = () => {
           </p>
         )}
 
+        {/* Add Student Button */}
         <AddStudentButton />
       </main>
 
