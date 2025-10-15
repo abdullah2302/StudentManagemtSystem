@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
 import StudentGrid from "../components/Student/StudentGrid";
 import AddStudentButton from "../components/Buttons/AddStudentButton";
@@ -8,23 +8,23 @@ const Students = () => {
   const [students, setStudents] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Load students from localStorage
+
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("students")) || [];
     setStudents(saved);
   }, []);
 
-  // Filter students by name or roll number
+ 
   const filteredStudents = students.filter((student) =>
     [student.name, student.rollNumber].some((field) =>
-      field?.toLowerCase().includes(searchQuery.toLowerCase())
+      field.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       <Navbar />
-
+    
       <main className="flex-grow container mx-auto px-5 py-10 relative">
         <h1 className="text-3xl font-extrabold text-center text-blue-700 mb-8">
           Our Students
@@ -41,7 +41,7 @@ const Students = () => {
           />
         </div>
 
-        {/* Student Grid */}
+        
         {filteredStudents.length > 0 ? (
           <StudentGrid students={filteredStudents} setStudents={setStudents} />
         ) : (
@@ -50,7 +50,7 @@ const Students = () => {
           </p>
         )}
 
-        {/* Add Student Button */}
+        
         <AddStudentButton />
       </main>
 

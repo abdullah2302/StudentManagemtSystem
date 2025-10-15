@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
 import ContactForm from "../components/Contact/ContactForm";
 import ContactInfo from "../components/Contact/ContactInfo";
 
 const Contact = () => {
   return (
-    <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
 
       <main className="flex-grow container mx-auto px-5 py-16">

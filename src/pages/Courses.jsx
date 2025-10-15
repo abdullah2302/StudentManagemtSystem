@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
 import HeroSection from "../components/Course/HeroSection";
 import CourseGrid from "../components/Course/CourseGrid";
@@ -34,7 +34,7 @@ const Courses = () => {
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
       <main className="flex-grow">
         <HeroSection />

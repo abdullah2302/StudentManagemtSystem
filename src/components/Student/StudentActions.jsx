@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-
+import { toast } from "react-hot-toast";
 const StudentActions = ({ student, onDelete }) => {
   const handleDelete = () => {
     const confirmDelete = window.confirm(
@@ -23,7 +23,7 @@ const StudentActions = ({ student, onDelete }) => {
     // Trigger parent update
     onDelete(student.rollNumber);
 
-    alert(`✅ ${student.name} has been deleted successfully!`);
+    toast.success(`${student.name} has been deleted successfully!`);
   };
 
   return (

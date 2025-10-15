@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
-
+import { toast } from "react-hot-toast";
 const AddStudent = () => {
   const navigate = useNavigate();
 
@@ -39,8 +39,9 @@ const AddStudent = () => {
     const updatedStudents = [...savedStudents, formData];
     localStorage.setItem("students", JSON.stringify(updatedStudents));
 
-    alert("✅ Student added successfully!");
+    toast.success("Student ADD successful!", { duration: 2000 });
     navigate("/students");
+   
   };
 
   return (
@@ -72,6 +73,7 @@ const AddStudent = () => {
                   ? "Course"
                   : "Department"
               }
+              required
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             />
           ))}

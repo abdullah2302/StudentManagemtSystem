@@ -11,7 +11,7 @@ const StudentCard = ({ student, onDelete }) => {
         <StudentAvatar name={student.name} />
       </div>
 
-      {/* Student Info */}
+     
       <StudentInfo
         name={student.name}
         rollNumber={student.rollNumber}
