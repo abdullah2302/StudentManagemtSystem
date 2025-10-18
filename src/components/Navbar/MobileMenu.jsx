@@ -20,6 +20,7 @@ const MobileMenu = ({ navLinks, isAuthenticated, handleLogout, closeMenu }) => {
           closeMenu={closeMenu}
         />
       </ul>
+      
     </div>
   );
 };

@@ -17,6 +17,7 @@ const StudentCard = ({ student, onDelete }) => {
         rollNumber={student.rollNumber}
         course={student.course}
         department={student.department}
+        contact={student.contact}
       />
 
       {/* Actions */}

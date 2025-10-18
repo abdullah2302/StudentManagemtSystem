@@ -11,6 +11,7 @@ const AddStudent = () => {
     rollNumber: "",
     course: "",
     department: "",
+    contact:""
   });
 
   // Handle input changes
@@ -57,7 +58,7 @@ const AddStudent = () => {
           onSubmit={handleSubmit}
           className="bg-white shadow-lg rounded-2xl p-8 max-w-md mx-auto space-y-5 border border-gray-200"
         >
-          {["name", "rollNumber", "course", "department"].map((field) => (
+          {["name", "rollNumber", "course", "department","contact"].map((field) => (
             <input
               key={field}
               type="text"
@@ -71,7 +72,9 @@ const AddStudent = () => {
                   ? "Roll Number"
                   : field === "course"
                   ? "Course"
-                  : "Department"
+                  :field==="department"?
+                  "Department"
+                  :"contact"
               }
               required
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"

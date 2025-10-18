@@ -42,6 +42,7 @@ const LoginForm = () => {
 
   return (
     <>
+    <Toaster position="top-center" reverseOrder={false} />
       <AuthLayout
         title="Welcome Back!"
         subtitle="Login to continue your learning journey 📘"

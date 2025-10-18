@@ -4,9 +4,10 @@ import {
   faIdBadge,
   faBookOpen,
   faBuilding,
+  faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 
-const StudentInfo = ({ name, rollNumber, course, department }) => {
+const StudentInfo = ({ name, rollNumber, course, department,contact }) => {
   return (
     <div className="text-center">
       {/* Student Name */}
@@ -35,6 +36,13 @@ const StudentInfo = ({ name, rollNumber, course, department }) => {
         <FontAwesomeIcon icon={faBuilding} className="text-purple-500" />
         <span className="font-medium">
           <span className="text-blue-600 font-semibold">Department:</span> {department}
+        </span>
+      </p>
+       {/* contact */}
+       <p className="text-gray-600 flex items-center justify-center gap-2">
+        <FontAwesomeIcon icon={faPhone} className="text-purple-500" />
+        <span className="font-medium">
+          <span className="text-blue-600 font-semibold">Contact:</span> {contact}
         </span>
       </p>
     </div>

@@ -1,48 +1,75 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-const StudentActions = ({ student, onDelete }) => {
+
+
+import StudentActionButtons from "./StudentActionButtons";
+import StudentEditForm from "./StudentEditForm";
+
+const StudentActions = ({ student, onDelete, onEdit }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState(student); 
+
+  
+
   const handleDelete = () => {
     const confirmDelete = window.confirm(
       `Are you sure you want to delete ${student.name}?`
     );
     if (!confirmDelete) return;
 
-    // Get students from localStorage
     const savedStudents = JSON.parse(localStorage.getItem("students")) || [];
-
-    // Filter out the deleted one
     const updatedStudents = savedStudents.filter(
       (s) => s.rollNumber !== student.rollNumber
     );
 
-    // Update localStorage
     localStorage.setItem("students", JSON.stringify(updatedStudents));
-
-    // Trigger parent update
     onDelete(student.rollNumber);
-
     toast.success(`${student.name} has been deleted successfully!`);
   };
 
+  const handleSave = (e) => {
+    e.preventDefault();
+
+    const savedStudents = JSON.parse(localStorage.getItem("students")) || [];
+    const updatedStudents = savedStudents.map((s) =>
+      s.rollNumber === student.rollNumber ? formData : s
+    );
+
+    localStorage.setItem("students", JSON.stringify(updatedStudents));
+    
+    // Call a prop function to notify the parent list component about the edit
+    if (onEdit) {
+      onEdit(formData);
+    }
+    
+    setIsEditing(false);
+    toast.success(`${student.name}'s record has been updated!`);
+  };
+  
+  const handleCancel = () => {
+    // rest form if click on cancle
+    setFormData(student); 
+    setIsEditing(false);
+  };
+  
   return (
-    <div className="mt-5 flex justify-center gap-3">
-      <button className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition text-sm flex items-center gap-1">
-        <FontAwesomeIcon icon={faEye} /> View
-      </button>
-
-      <button className="bg-yellow-400 text-white px-3 py-1 rounded-md hover:bg-yellow-500 transition text-sm flex items-center gap-1">
-        <FontAwesomeIcon icon={faEdit} /> Edit
-      </button>
-
-      <button
-        onClick={handleDelete}
-        className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition text-sm flex items-center gap-1"
-      >
-        <FontAwesomeIcon icon={faTrashAlt} /> Delete
-      </button>
-    </div>
+    <>
+      {isEditing ? (
+        <StudentEditForm 
+          formData={formData}
+          setFormData={setFormData}
+          onSubmit={handleSave}
+          onCancel={handleCancel}
+        />
+      ) : (
+        <StudentActionButtons 
+          onEdit={() => setIsEditing(true)}
+          onDelete={handleDelete}
+          student={student}
+         
+        />
+      )}
+    </>
   );
 };
 
