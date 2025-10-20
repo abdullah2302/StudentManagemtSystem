@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
 import { toast } from "react-hot-toast";
-import { addStudent, getStudents } from "../api/studentApi"; 
+import { addStudent, getStudents } from "../../src/api/studentApi"; 
 
 const AddStudent = () => {
   const navigate = useNavigate();

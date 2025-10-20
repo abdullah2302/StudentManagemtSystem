@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
 import StudentGrid from "../components/Student/StudentGrid";
 import AddStudentButton from "../components/Buttons/AddStudentButton";
-import { getStudents } from "../api/studentApi"; 
+import { getStudents } from "../../src/api/studentApis"; 
 import { toast } from "react-hot-toast";
 
 const Students = () => {
