@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
 import { toast } from "react-hot-toast";
+import { addStudent, getStudents } from "../api/studentApi"; 
+
 const AddStudent = () => {
   const navigate = useNavigate();
 
@@ -11,8 +13,10 @@ const AddStudent = () => {
     rollNumber: "",
     course: "",
     department: "",
-    contact:""
+    contact: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -21,28 +25,34 @@ const AddStudent = () => {
   };
 
   // Handle form submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const savedStudents = JSON.parse(localStorage.getItem("students")) || [];
+    try {
+      
+      const existingStudents = await getStudents();
+      const alreadyExists = existingStudents.some(
+        (student) => student.rollNumber === formData.rollNumber
+      );
 
-    // Prevent duplicate roll numbers
-    const alreadyExists = savedStudents.some(
-      (student) => student.rollNumber === formData.rollNumber
-    );
+      if (alreadyExists) {
+        toast.error("⚠️ A student with this roll number already exists!");
+        setLoading(false);
+        return;
+      }
 
-    if (alreadyExists) {
-      alert("⚠️ A student with this roll number already exists!");
-      return;
-    }
-
-    // Save new student
-    const updatedStudents = [...savedStudents, formData];
-    localStorage.setItem("students", JSON.stringify(updatedStudents));
-
-    toast.success("Student ADD successful!", { duration: 2000 });
-    navigate("/students");
    
+      await addStudent(formData);
+
+      toast.success("🎉 Student added successfully!", { duration: 2000 });
+      navigate("/students");
+    } catch (error) {
+      console.error("Error adding student:", error);
+      toast.error("❌ Failed to add student. Please try again!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,7 +68,7 @@ const AddStudent = () => {
           onSubmit={handleSubmit}
           className="bg-white shadow-lg rounded-2xl p-8 max-w-md mx-auto space-y-5 border border-gray-200"
         >
-          {["name", "rollNumber", "course", "department","contact"].map((field) => (
+          {["name", "rollNumber", "course", "department", "contact"].map((field) => (
             <input
               key={field}
               type="text"
@@ -72,9 +82,9 @@ const AddStudent = () => {
                   ? "Roll Number"
                   : field === "course"
                   ? "Course"
-                  :field==="department"?
-                  "Department"
-                  :"contact"
+                  : field === "department"
+                  ? "Department"
+                  : "Contact Number"
               }
               required
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
@@ -84,9 +94,14 @@ const AddStudent = () => {
           <div className="flex space-x-3">
             <button
               type="submit"
-              className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition"
+              disabled={loading}
+              className={`flex-1 py-2 rounded-lg font-medium text-white transition ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              }`}
             >
-              Add Student
+              {loading ? "Adding..." : "Add Student"}
             </button>
 
             <button

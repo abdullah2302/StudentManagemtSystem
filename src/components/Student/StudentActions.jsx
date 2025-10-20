@@ -1,72 +1,64 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-
-
 import StudentActionButtons from "./StudentActionButtons";
 import StudentEditForm from "./StudentEditForm";
+import { deleteStudent,updateStudent} from "../../api/studentApi"; 
+
 
 const StudentActions = ({ student, onDelete, onEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState(student); 
+  const [formData, setFormData] = useState(student);
 
-  
-
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const confirmDelete = window.confirm(
       `Are you sure you want to delete ${student.name}?`
     );
     if (!confirmDelete) return;
 
-    const savedStudents = JSON.parse(localStorage.getItem("students")) || [];
-    const updatedStudents = savedStudents.filter(
-      (s) => s.rollNumber !== student.rollNumber
-    );
-
-    localStorage.setItem("students", JSON.stringify(updatedStudents));
-    onDelete(student.rollNumber);
-    toast.success(`${student.name} has been deleted successfully!`);
+    try {
+      await deleteStudent(student.id); 
+      onDelete(student.id); 
+      toast.success(`${student.name} has been deleted successfully!`);
+    } catch (error) {
+      console.error("Delete failed:", error);
+      toast.error("❌ Failed to delete student. Try again.");
+    }
   };
 
-  const handleSave = (e) => {
+  // ✅ Save Edited Student (PUT or PATCH)
+  const handleSave = async (e) => {
     e.preventDefault();
 
-    const savedStudents = JSON.parse(localStorage.getItem("students")) || [];
-    const updatedStudents = savedStudents.map((s) =>
-      s.rollNumber === student.rollNumber ? formData : s
-    );
-
-    localStorage.setItem("students", JSON.stringify(updatedStudents));
-    
-    // Call a prop function to notify the parent list component about the edit
-    if (onEdit) {
-      onEdit(formData);
+    try {
+      await updateStudent(student.id, formData); 
+      if (onEdit) onEdit(formData); 
+      toast.success(`${student.name}'s record has been updated!`);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Update failed:", error);
+      toast.error("❌ Failed to update student. Try again.");
     }
-    
-    setIsEditing(false);
-    toast.success(`${student.name}'s record has been updated!`);
   };
-  
+
   const handleCancel = () => {
-    // rest form if click on cancle
-    setFormData(student); 
+    setFormData(student);
     setIsEditing(false);
   };
-  
+
   return (
     <>
       {isEditing ? (
-        <StudentEditForm 
+        <StudentEditForm
           formData={formData}
           setFormData={setFormData}
           onSubmit={handleSave}
           onCancel={handleCancel}
         />
       ) : (
-        <StudentActionButtons 
+        <StudentActionButtons
           onEdit={() => setIsEditing(true)}
           onDelete={handleDelete}
           student={student}
-         
         />
       )}
     </>

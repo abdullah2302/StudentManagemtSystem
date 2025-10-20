@@ -23,6 +23,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("loggedInUser");
     toast.success("Logged out successfully!", { duration: 2000 });
     navigate("/login");
   };
@@ -42,7 +43,11 @@ const Navbar = () => {
         <div className="container mx-auto flex justify-between items-center p-4">
           {/* Logo */}
           <Link to="/" className="text-2xl font-extrabold tracking-wide">
-            Student<span className="text-yellow-300">MS</span>
+            Student<span className={`${
+          theme === "dark"
+            ? "text-blue-300"
+            : "text-yellow-300"
+        } `}>MS</span>
           </Link>
 
           {/* Desktop Navigation */}

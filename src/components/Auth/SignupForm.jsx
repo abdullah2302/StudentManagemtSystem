@@ -1,10 +1,10 @@
-// src/components/SignupForm.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-hot-toast";
 import AuthLayout from "../Auth/AuthLayout";
+import { getAdminByEmail, createAdmin } from "../../api/adminApi"; 
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -17,40 +17,36 @@ const SignupForm = () => {
     setError("");
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const userExists = users.some((u) => u.email === form.email);
-
-    setTimeout(() => {
-      setLoading(false);
-      if (userExists) {
+    try {
+      const existingAdmin = await getAdminByEmail(form.email);
+      if (existingAdmin.length > 0) {
         setError("⚠️ User already exists! Please login instead.");
+        setLoading(false);
         return;
       }
 
-      users.push(form);
-      localStorage.setItem("users", JSON.stringify(users));
+      await createAdmin(form);
 
       toast.success("Signup successful! Please login.", { duration: 2000 });
       navigate("/login");
-    }, 800);
+    } catch (err) {
+      console.error("Signup error:", err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <AuthLayout
-      title="Join EduLearn Today!"
-      subtitle="Start your learning journey 🌱"
-      color="green"
-    >
+    <AuthLayout title="Join EduLearn Today!" subtitle="Start your learning journey 🌱">
       <form onSubmit={handleSignup}>
         {/* Name */}
         <div className="mb-5">
-          <label className="block text-gray-700 font-medium mb-2">
-            Full Name
-          </label>
+          <label className="block text-gray-700 font-medium mb-2">Full Name</label>
           <div className="flex items-center border rounded-lg px-3 py-2 bg-gray-50 focus-within:ring-2 focus-within:ring-green-400">
             <FontAwesomeIcon icon={faUser} className="text-green-500 mr-3" />
             <input
@@ -67,9 +63,7 @@ const SignupForm = () => {
 
         {/* Email */}
         <div className="mb-5">
-          <label className="block text-gray-700 font-medium mb-2">
-            Email
-          </label>
+          <label className="block text-gray-700 font-medium mb-2">Email</label>
           <div className="flex items-center border rounded-lg px-3 py-2 bg-gray-50 focus-within:ring-2 focus-within:ring-green-400">
             <FontAwesomeIcon icon={faEnvelope} className="text-green-500 mr-3" />
             <input
@@ -86,9 +80,7 @@ const SignupForm = () => {
 
         {/* Password */}
         <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-2">
-            Password
-          </label>
+          <label className="block text-gray-700 font-medium mb-2">Password</label>
           <div className="flex items-center border rounded-lg px-3 py-2 bg-gray-50 focus-within:ring-2 focus-within:ring-green-400">
             <FontAwesomeIcon icon={faLock} className="text-green-500 mr-3" />
             <input
@@ -104,9 +96,7 @@ const SignupForm = () => {
         </div>
 
         {/* Error */}
-        {error && (
-          <p className="text-red-500 text-sm text-center mb-4">{error}</p>
-        )}
+        {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
 
         {/* Button */}
         <button

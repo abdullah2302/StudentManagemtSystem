@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { Toaster, toast } from "react-hot-toast";
 import AuthLayout from "../Auth/AuthLayout";
+import { loginAdmin } from "../../api/adminApi"; 
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -16,33 +17,34 @@ const LoginForm = () => {
     setError("");
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const user = users.find(
-      (u) => u.email === form.email && u.password === form.password
-    );
+    try {
+      const admins = await loginAdmin(form.email, form.password); 
 
-    setTimeout(() => {
-      setLoading(false);
-
-      if (user) {
+      if (admins.length > 0) {
+        const admin = admins[0];
         localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("loggedInUser", JSON.stringify(user));
-        toast.success(`Login successful! ${user.name}`, { duration: 2000 });
+        localStorage.setItem("loggedInAdmin", JSON.stringify(admin));
+        toast.success(`Welcome back, ${admin.name}! 👋`, { duration: 2000 });
         navigate("/");
       } else {
         setError("❌ Invalid email or password!");
-        toast.error("Invalid email or password!")
+        toast.error("Invalid email or password!");
       }
-    }, 800);
+    } catch (err) {
+      console.error("Login error:", err);
+      toast.error("Failed to connect to server.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
-    <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <AuthLayout
         title="Welcome Back!"
         subtitle="Login to continue your learning journey 📘"
