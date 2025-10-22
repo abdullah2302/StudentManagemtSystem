@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import StudentActionButtons from "./StudentActionButtons";
-import StudentEditForm from "./StudentEditForm";
+import StudentEditModal from "./StudentEditModel";
 import { deleteStudent,updateStudent} from "../../api/studentApi"; 
 
 
@@ -21,22 +21,23 @@ const StudentActions = ({ student, onDelete, onEdit }) => {
       toast.success(`${student.name} has been deleted successfully!`);
     } catch (error) {
       console.error("Delete failed:", error);
-      toast.error("❌ Failed to delete student. Try again.");
+      toast.error("Failed to delete student. Try again.");
     }
   };
 
-  // ✅ Save Edited Student (PUT or PATCH)
+  // Edited Student put
   const handleSave = async (e) => {
     e.preventDefault();
 
     try {
-      await updateStudent(student.id, formData); 
-      if (onEdit) onEdit(formData); 
+      await updateStudent(student.id, formData); //Update student 
+      if (onEdit) 
+        onEdit(formData); // Update parent ui
       toast.success(`${student.name}'s record has been updated!`);
       setIsEditing(false);
     } catch (error) {
       console.error("Update failed:", error);
-      toast.error("❌ Failed to update student. Try again.");
+      toast.error("Failed to update student. Try again.");
     }
   };
 
@@ -48,12 +49,13 @@ const StudentActions = ({ student, onDelete, onEdit }) => {
   return (
     <>
       {isEditing ? (
-        <StudentEditForm
-          formData={formData}
-          setFormData={setFormData}
-          onSubmit={handleSave}
-          onCancel={handleCancel}
-        />
+       <StudentEditModal
+       isOpen={isEditing}
+       formData={formData}
+       setFormData={setFormData}
+       onSubmit={handleSave}
+       onCancel={handleCancel}
+     />
       ) : (
         <StudentActionButtons
           onEdit={() => setIsEditing(true)}

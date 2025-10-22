@@ -1,7 +1,7 @@
 {
   "admins": [
     {
-      "id": "bb82",
+      "id": "bc28",
       "name": "Abdullah",
       "email": "ab0014364@gmail.com",
       "password": "123456789"
@@ -9,12 +9,36 @@
   ],
   "students": [
     {
-      "id": "2dca",
-      "name": "Mohammad",
-      "rollNumber": "L1s22bscs0471",
+      "id": "6725",
+      "name": "Abdullah",
+      "rollNumber": "L1s22bscs04600",
       "course": "SE",
       "department": "FOIT",
-      "contact": "023245677"
+      "contact": "02324567789"
+    },
+    {
+      "id": "5ad2",
+      "name": "Fatima",
+      "rollNumber": "L1s22bscs0700",
+      "course": "SE",
+      "department": "FOIT",
+      "contact": "02324567789"
+    },
+    {
+      "id": "8c95",
+      "name": "Zahid",
+      "rollNumber": "L1s22bscs0801",
+      "course": "SE",
+      "department": "FOIT",
+      "contact": "02324567789"
+    },
+    {
+      "id": "74d3",
+      "name": "Raza ",
+      "rollNumber": "L1s22bscs0802",
+      "course": "SE",
+      "department": "FOIT",
+      "contact": "02324567789"
     }
   ]
 }

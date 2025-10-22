@@ -25,7 +25,7 @@ const LoginForm = () => {
       const admins = await loginAdmin(form.email, form.password); 
 
       if (admins.length > 0) {
-        const admin = admins[0];
+        const [admin] = admins;
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("loggedInAdmin", JSON.stringify(admin));
         toast.success(`Welcome back, ${admin.name}! 👋`, { duration: 2000 });
