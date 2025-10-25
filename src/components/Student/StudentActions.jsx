@@ -16,8 +16,8 @@ const StudentActions = ({ student, onDelete, onEdit }) => {
     if (!confirmDelete) return;
 
     try {
-      await deleteStudent(student.id); 
-      onDelete(student.id); 
+      await deleteStudent(student.rollNumber); 
+      onDelete(student.rollNumber); 
       toast.success(`${student.name} has been deleted successfully!`);
     } catch (error) {
       console.error("Delete failed:", error);
@@ -30,7 +30,7 @@ const StudentActions = ({ student, onDelete, onEdit }) => {
     e.preventDefault();
 
     try {
-      await updateStudent(student.id, formData); //Update student 
+      await updateStudent(student.rollNumber, formData); //Update student 
       if (onEdit) 
         onEdit(formData); // Update parent ui
       toast.success(`${student.name}'s record has been updated!`);

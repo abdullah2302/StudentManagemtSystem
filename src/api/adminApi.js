@@ -1,17 +1,24 @@
-import api from"./api";
-// ===== admin API FUNCTIONS =====
+import api from "./api";
 
+// 🔹 Get admin by email (for signup validation)
 export const getAdminByEmail = async (email) => {
-    const response = await api.get(`/admins?email=${email}`);
+  try {
+    const response = await api.get(`/admins/email/${email}`);
     return response.data;
-  };
-  
-  export const createAdmin = async (adminData) => {
-    const response = await api.post("/admins", adminData);
-    return response.data;
-  };
-  
-  export const loginAdmin = async (email, password) => {
-    const response = await api.get(`/admins?email=${email}&password=${password}`);
-    return response.data;
-  };
+  } catch (err) {
+    if (err.response && err.response.status === 300) return null; // email not found
+    throw err;
+  }
+};
+
+// 🔹 Create new admin
+export const createAdmin = async (adminData) => {
+  const response = await api.post("/admins/register", adminData);
+  return response.data;
+};
+
+// 🔹 Login admin
+export const loginAdmin = async (email, password) => {
+  const response = await api.post("/admins/login", { email, password });
+  return response.data;
+};

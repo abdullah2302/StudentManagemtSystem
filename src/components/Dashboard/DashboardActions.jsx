@@ -1,13 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Calculator } from "lucide-react"; // if using lucide-react icons
 
 const DashboardActions = () => {
   const navigate = useNavigate();
 
   return (
+    <>
+ 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* Manage Students Card */}
-      <div className="bg-white shadow-lg rounded-xl p-6 flex flex-col transition duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div className="bg-white shadow-lg  p-6 flex flex-col transition duration-300 hover:shadow-2xl hover:-translate-y-1">
         {/* Icon */}
         <div className="flex justify-center items-center mb-4">
           <div className="p-3 rounded-full bg-blue-100">
@@ -47,7 +50,7 @@ const DashboardActions = () => {
       </div>
 
       {/* Manage Courses Card */}
-      <div className="bg-white shadow-lg rounded-xl p-6 flex flex-col transition duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div className="bg-white shadow-lg  p-6 flex flex-col transition duration-300 hover:shadow-2xl hover:-translate-y-1">
         {/* Icon */}
         <div className="flex justify-center items-center mb-4">
           <div className="p-3 rounded-full bg-green-100">
@@ -79,7 +82,17 @@ const DashboardActions = () => {
           </button>
         </div>
       </div>
+      <button
+        onClick={() => navigate("/cgpa-calculator")}
+        className="flex flex-col items-center justify-center bg-green-600 hover:bg-green-700 text-white p-6  shadow-md hover:shadow-xl transition transform hover:-translate-y-1"
+      >
+        <Calculator size={40} className="mb-3" />
+        <h2 className="text-xl font-semibold">CGPA Calculator</h2>
+        <p className="text-sm opacity-80 mt-1">Calculate student grades easily</p>
+      </button>
     </div>
+  
+    </>
   );
 };
 

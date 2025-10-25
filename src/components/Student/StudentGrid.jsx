@@ -4,7 +4,6 @@ import StudentCard from "./StudentCard";
 const StudentGrid = ({ students, setStudents }) => {
   const handleDelete = (rollNumber) => {
     const updated = students.filter((student) => student.rollNumber !== rollNumber);
-    localStorage.setItem("students", JSON.stringify(updated));
     setStudents(updated);
   };
 

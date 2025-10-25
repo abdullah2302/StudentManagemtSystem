@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
-import { Toaster, toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import AuthLayout from "../Auth/AuthLayout";
-import { loginAdmin } from "../../api/adminApi"; 
+import { loginAdmin } from "../../api/adminApi";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -22,12 +22,13 @@ const LoginForm = () => {
     setLoading(true);
 
     try {
-      const admins = await loginAdmin(form.email, form.password); 
+      const response = await loginAdmin(form.email, form.password);
 
-      if (admins.length > 0) {
-        const [admin] = admins;
+      if (response && response.success) {
+        const admin = response.admin;
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("loggedInAdmin", JSON.stringify(admin));
+
         toast.success(`Welcome back, ${admin.name}! 👋`, { duration: 2000 });
         navigate("/");
       } else {
@@ -36,7 +37,8 @@ const LoginForm = () => {
       }
     } catch (err) {
       console.error("Login error:", err);
-      toast.error("Failed to connect to server.");
+      setError("⚠ Failed to connect to the server. Please try again.");
+      toast.error("Server connection failed!");
     } finally {
       setLoading(false);
     }
@@ -57,7 +59,7 @@ const LoginForm = () => {
             <label className="block text-gray-700 font-medium mb-2">
               Email Address
             </label>
-            <div className="flex items-center border rounded-lg px-3 py-2 bg-gray-50 focus-within:ring-2 focus-within:ring-blue-400">
+            <div className="flex items-center border-b  px-3 py-2 bg-gray-50 focus-within:ring-2 focus-within:ring-blue-400">
               <FontAwesomeIcon icon={faEnvelope} className="text-blue-500 mr-3" />
               <input
                 type="email"
@@ -76,7 +78,7 @@ const LoginForm = () => {
             <label className="block text-gray-700 font-medium mb-2">
               Password
             </label>
-            <div className="flex items-center border rounded-lg px-3 py-2 bg-gray-50 focus-within:ring-2 focus-within:ring-blue-400">
+            <div className="flex items-center border-b px-3 py-2 bg-gray-50 focus-within:ring-2 focus-within:ring-blue-400">
               <FontAwesomeIcon icon={faLock} className="text-blue-500 mr-3" />
               <input
                 type="password"
@@ -97,7 +99,7 @@ const LoginForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-lg font-semibold text-white transition-all duration-300 ${
+            className={`w-full py-3  font-semibold text-white transition-all duration-300 ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg"
@@ -106,6 +108,7 @@ const LoginForm = () => {
             {loading ? "Signing In..." : "Login"}
           </button>
 
+          {/* Signup Link */}
           <p className="text-center text-sm mt-6 text-gray-600">
             Don’t have an account?{" "}
             <span

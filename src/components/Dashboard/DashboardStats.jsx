@@ -4,7 +4,6 @@ import { getStudents } from "../../api/studentApi";
 const DashboardStats = () => {
   const [studentCount, setStudentCount] = useState(0);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
@@ -23,8 +22,8 @@ const DashboardStats = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
       {/* Total Students Card */}
-      <div className="bg-white shadow-lg rounded-xl p-6 text-center transition duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <div className="flex justify-center items-center mb-4">
+      <div className="bg-white shadow-lg  p-6 text-center">
+        <div className="flex justify-center  items-center mb-4">
           <div className="p-3 rounded-full bg-blue-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +47,7 @@ const DashboardStats = () => {
       </div>
 
       {/* Courses Card */}
-      <div className="bg-white shadow-lg rounded-xl p-6 text-center transition duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div className="bg-white shadow-lg p-6 text-center ">
         <div className="flex justify-center items-center mb-4">
           <div className="p-3 rounded-full bg-green-100">
             <svg
@@ -71,7 +70,7 @@ const DashboardStats = () => {
       </div>
 
       {/* Departments Card */}
-      <div className="bg-white shadow-lg rounded-xl p-6 text-center transition duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div className="bg-white shadow-lg  p-6 text-center ">
         <div className="flex justify-center items-center mb-4">
           <div className="p-3 rounded-full bg-purple-100">
             <svg
@@ -92,6 +91,7 @@ const DashboardStats = () => {
         <h2 className="text-xl font-semibold text-gray-700">Departments</h2>
         <p className="text-3xl font-bold text-purple-600 mt-2">5</p>
       </div>
+      
     </div>
   );
 };

@@ -10,7 +10,7 @@ import Courses from "./pages/Courses";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-
+import CGPACalculator from "./pages/CGPAcalculator";
 
 import PrivateRoute from "./components/Auth/PrivateRoute";
 
@@ -49,6 +49,14 @@ function App() {
             </PrivateRoute>
           }
         />
+        
+        <Route path="/cgpa-calculator" 
+        element=
+        {<PrivateRoute>
+             <CGPACalculator />
+        </PrivateRoute>
+        
+        } />
       </Routes>
     </Router>
   );

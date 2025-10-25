@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
 import StudentGrid from "../components/Student/StudentGrid";
 import AddStudentButton from "../components/Buttons/AddStudentButton";
-import { getStudents } from "../../src/api/studentApi"; 
+import { getStudents } from "../api/studentApi"; 
 import { toast } from "react-hot-toast";
 
 const Students = () => {
@@ -27,7 +27,7 @@ const Students = () => {
     fetchStudents();
   }, []);
 
-  //search
+  
   const filteredStudents = students.filter((student) =>
     [student.name, student.rollNumber].some((field) =>
       field?.toLowerCase().includes(searchQuery.toLowerCase())
